@@ -1,0 +1,10 @@
+[package]
+name = "nix-ninja-task"
+version.workspace = true
+edition.workspace = true
+description = "Nix derivation builder for nix-ninja"
+
+[dependencies]
+anyhow = "1.0"
+clap = { version = "4.4", features = ["derive", "env"] }
+nix-libstore = { path = "../nix-libstore" }

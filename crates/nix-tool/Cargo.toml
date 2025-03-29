@@ -1,0 +1,10 @@
+[package]
+name = "nix-tool"
+version.workspace = true
+edition.workspace = true
+description = "Helper to spawn Nix commands"
+
+[dependencies]
+anyhow = "1.0"
+nix-libstore = { path = "../nix-libstore" }
+serde_json = "1"

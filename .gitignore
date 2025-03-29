@@ -1,0 +1,13 @@
+# Rust
+/target
+
+# Nix
+.direnv/
+result*
+
+# Nix-ninja
+out/
+
+# Aider
+.aider*
+vendor/
