@@ -1,5 +1,6 @@
 name: builder
 on: [push, pull_request]
+
 jobs:
   build:
     name: Build
@@ -16,11 +17,9 @@ jobs:
             /home/runner/.cargo
             target
           key: ${{ runner.os }}-${{ env.cache-name }}-${{ hashFiles('**/Cargo.toml', '**/Cargo.lock', '**/.cargo/config.toml', '**/rust-toolchain.toml', '**/flake.nix', '**/flake.lock') }}
-
       - name: Build
         run: |
           eval "$(nix print-dev-env)"
-
           set -x
           cargo fmt --check
           cargo clippy
@@ -32,6 +31,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: cachix/install-nix-action@v31
-
+        with:
+          extra_nix_config: |
+            experimental-features = nix-command flakes dynamic-derivations ca-derivations recursive-nix
+            system-features = recursive-nix
+      - name: Install Nix master
+        run: nix profile install github:NixOS/nix/b9b510d692722da077c9aeb60b35ce6d29e5fdf5 --priority 4
       - name: Build with Nix
         run: nix build -Lv
+      - name: Build example-hello
+        run: nix build .#example-hello -Lv
