@@ -36,8 +36,10 @@ jobs:
             experimental-features = nix-command flakes dynamic-derivations ca-derivations recursive-nix
             system-features = recursive-nix
       - name: Install Nix master
-        run: nix profile install github:NixOS/nix/b9b510d692722da077c9aeb60b35ce6d29e5fdf5 --priority 4
+        run: nix profile install github:NixOS/nix/d904921 --priority 4
       - name: Build with Nix
         run: nix build -Lv
-      - name: Build example-hello
-        run: nix build .#example-hello -Lv
+      - name: Build example-hello with temporary store
+        run: |
+          mkdir -p /tmp/dyn-drvs
+          nix build .#example-hello --store /tmp/dyn-drvs --print-out-paths -L
