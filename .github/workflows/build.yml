@@ -41,5 +41,5 @@ jobs:
         run: nix build -Lv
       - name: Build example-hello with temporary store
         run: |
-          mkdir -p /tmp/dyn-drvs
-          nix build .#example-hello --store /tmp/dyn-drvs --print-out-paths -L
+          mkdir -p $HOME/tmp-nix-store
+          nix build .#example-hello --store $HOME/tmp-nix-store --print-out-paths -L
